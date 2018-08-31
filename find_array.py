@@ -37,7 +37,7 @@ def calculate_offset(data):
 
 
 # для поиска используются алгоритм Бойера-Мура-Хорпсула
-def boyer_mur_horpsul(data, fragm, offset):
+def boyer_mur_horpsul(data, fragm):
     i = fragm.shape[0] - 1
     while i < data.shape[0] - fragm.shape[0]:
 
