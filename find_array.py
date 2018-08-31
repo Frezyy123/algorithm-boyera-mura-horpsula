@@ -35,35 +35,35 @@ def calculate_offset(data):
 
     return offset
 
+
 # для поиска используются алгоритм Бойера-Мура-Хорпсула
 def boyer_mur_horpsul(data, fragm, offset):
-
     i = fragm.shape[0] - 1
     while i < data.shape[0] - fragm.shape[0]:
 
         if data[i] == fragm[-1]:
             part_data = data[i - (fragm.shape[0] - 1):i + 1]
 
-
             if np.array_equal(part_data, fragm):
 
-                return i-(fragm.shape[0]- 1)                            # возвращает индекс первого элемента
+                return i - (fragm.shape[0] - 1)  # возвращает индекс первого элемента
 
             else:
                 for j in range(2, fragm.shape[0] - 1):
 
-                    if part_data.tolist()[-j] != fragm.tolist()[-j]:    # в случае если элементы не совпадают, то индекс меняется в соответствии с таблицей смещения
+                    if part_data.tolist()[-j] != fragm.tolist()[
+                        -j]:  # в случае если элементы не совпадают, то индекс меняется в соответствии с таблицей смещения
                         i += offset[alphabet_power + data[i]]
                         break
 
         else:
-            i += offset[alphabet_power + data[i]]                       # в случае если последний элемент не совпадают, то индекс меняется в соответствии с таблицей смещения
+            i += offset[alphabet_power + data[
+                i]]  # в случае если последний элемент не совпадают, то индекс меняется в соответствии с таблицей смещения
 
     return None
 
 
-def max_matcher(all_data,fragm):
-
+def max_matcher(all_data, fragm):
     return_data = all_data
 
     for data in all_data:
@@ -73,7 +73,8 @@ def max_matcher(all_data,fragm):
 
     return return_data
 
-matlab_data = io.loadmat('/home/alexandr/Dropbox/task2.mat')
+
+matlab_data = io.loadmat('task2.mat')
 
 data_1 = matlab_data['data_1'][0]
 data_2 = matlab_data['data_2'][0]
@@ -84,17 +85,13 @@ all_data.append(data_1)
 all_data.append(data_2)
 all_data.append(data_3)
 
-
 fragm = matlab_data['fragm'][0]
 
 # all_data = max_matcher(all_data,fragm)
 
 offset = calculate_offset(fragm)
 
+for index, data in enumerate(all_data):  # поиск фрагмента
 
-
-for index,data in enumerate(all_data):                      #поиск фрагмента
-
-    if boyer_mur_horpsul(data,fragm)!=None:
+    if boyer_mur_horpsul(data, fragm) != None:
         print(index)
-
